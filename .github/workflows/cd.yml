@@ -16,27 +16,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up SSH key and deploy
-        env:
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          set -x  # Enable debugging
-
-          # Create .ssh directory
-          mkdir -p ~/.ssh
-
-          # Save SSH private key to a file
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-          # Add the server to known_hosts to prevent prompts
-          # ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
-
-          # Test SSH connection
-          ssh -i ~/.ssh/id_rsa -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_SERVER "echo SSH connection successful"
-
-          # Run deployment command using rsync
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -p $DEPLOY_PORT" --exclude '.git*' . $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.DEPLOY_SERVER }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin dev
