@@ -19,7 +19,20 @@ jobs:
       - name: Run PHP syntax check
         run: |
             set -e
-            find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; > result.log || (cat result.log && exit 1)
+          # Initialize a variable to track errors
+          error_detected=0
+          # Find all PHP files excluding vendor directory and check syntax
+          find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; | while read -r line; do
+            echo "$line"
+            if echo "$line" | grep -q "Parse error"; then
+              error_detected=1
+            fi
+          done
+          # Exit with an error if syntax errors were detected
+          if [ $error_detected -ne 0 ]; then
+            echo "Syntax errors detected. Failing the job."
+            exit 1
+          fi
                  
       # - name: Set up PHP
       #   uses: shivammathur/setup-php@v2
