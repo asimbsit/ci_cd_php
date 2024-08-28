@@ -25,7 +25,7 @@ jobs:
         run: composer install
 
       - name: Run PHP syntax check
-        run: find . -type f -name "*.php" -exec php -l {} \;
+        run: find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \;
 
       - name: Run PHPUnit tests
         run: composer test
