@@ -24,4 +24,8 @@ jobs:
           debug: true
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin ${{ secrets.SSH_GIT_ORIGIN_WITH_PAT }}
+            fi
             git pull origin dev
