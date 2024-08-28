@@ -1,13 +1,15 @@
 name: Deploy to Server
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_run:
+    workflows: ["PHP Lint and Test"]
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Ensures this job only runs if the previous workflow was successful
 
     steps:
       - name: Checkout code
