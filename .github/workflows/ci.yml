@@ -23,8 +23,13 @@ jobs:
 
       - name: Run PHP syntax check
         run: |
-          set -e
-          find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; || (echo "Syntax errors detected" && exit 1)
+            set -e
+            exit_code=0
+            find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; || exit_code=$?
+            if [ $exit_code -ne 0 ]; then
+              echo "Syntax errors detected"
+              exit 1
+            fi
 
       - name: Install dependencies
         run: composer install
