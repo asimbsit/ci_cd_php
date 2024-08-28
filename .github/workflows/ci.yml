@@ -25,7 +25,7 @@ jobs:
                     echo "Syntax errors detected"
                     exit 1
                   fi
-                  
+                 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
