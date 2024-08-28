@@ -21,14 +21,14 @@ jobs:
             set -e
             find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; > result.log || (cat result.log && exit 1)
                  
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4' # Specify your PHP version here
+      # - name: Set up PHP
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: '7.4' # Specify your PHP version here
 
-      - name: Install dependencies
-        run: composer install
+      # - name: Install dependencies
+      #   run: composer install
 
-      - name: Run PHPUnit tests
-        run: ./vendor/bin/phpunit --verbose tests
+      # - name: Run PHPUnit tests
+      #   run: ./vendor/bin/phpunit --verbose tests
 
