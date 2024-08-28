@@ -23,5 +23,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
+            whoami
+            ls -l
             cd ${{ secrets.DEPLOY_PATH }}
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin <repository-url>
+            fi
             git pull origin dev
