@@ -23,7 +23,7 @@ jobs:
             find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; || exit_code=$?
             if [ $exit_code -ne 0 ]; then
               echo "Syntax errors detected"
-              exit 1
+              fail
             fi
                  
       - name: Set up PHP
