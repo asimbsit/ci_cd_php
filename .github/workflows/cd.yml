@@ -28,6 +28,6 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH }}
             if [ ! -d ".git" ]; then
               git init
-              git remote add origin <repository-url>
+              git remote add origin https://github.com/asimbsit/ci_cd_php.git
             fi
             git pull origin dev
