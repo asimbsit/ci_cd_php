@@ -1,0 +1,31 @@
+name: PHP Lint and Test
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1' # Specify your PHP version here
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run PHP syntax check
+        run: find . -type f -name "*.php" -exec php -l {} \;
+
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit --verbose
