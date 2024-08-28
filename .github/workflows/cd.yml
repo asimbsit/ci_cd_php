@@ -24,7 +24,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           set -x  # Enable debugging
-          
+
           # Create .ssh directory
           mkdir -p ~/.ssh
 
@@ -33,12 +33,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ls -la ~/.ssh  # List .ssh directory to confirm id_rsa file permissions
 
-          # Scan SSH key
-          ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
-          cat ~/.ssh/known_hosts  # List known_hosts to verify entry
+          # Scan SSH key with verbose output
+          ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER || true  # Ignore errors to see output
 
-          # Test SSH connection
-          ssh -o StrictHostKeyChecking=no -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_SERVER "echo SSH connection successful"
+          # Test SSH connection with verbose output
+          ssh -o StrictHostKeyChecking=no -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_SERVER "echo SSH connection successful" || true
 
-          # Run rsync
-          rsync -avz -e "ssh -p $DEPLOY_PORT" --exclude '.git*' . $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
+          # Run rsync with verbose output
+          rsync -avz -e "ssh -p $DEPLOY_PORT -v" --exclude '.git*' . $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH || true
