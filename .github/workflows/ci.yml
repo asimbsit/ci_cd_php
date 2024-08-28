@@ -28,4 +28,5 @@ jobs:
         run: find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \;
 
       - name: Run PHPUnit tests
-        run: composer test
+        run: ./vendor/bin/phpunit --verbose tests
+
