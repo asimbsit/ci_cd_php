@@ -27,7 +27,7 @@ jobs:
       - name: Run PHP syntax check
         run: |
           set -e
-          find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \;
+          find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; | tee result.log | grep -i 'syntax error' || exit 1
 
       - name: Run PHPUnit tests
         run: ./vendor/bin/phpunit --verbose tests
