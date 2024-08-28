@@ -23,5 +23,9 @@ jobs:
           password: ${{ secrets.SSH_PASS }}
           debug: true
           script: |
-            whoami
-            ls -l
+            cd ${{ secrets.DEPLOY_PATH }}
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://asimbsit: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@github.com/asimbsit/ci_cd_php.git
+            fi
+            git pull origin dev
