@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Ensures this job only runs if the previous workflow was successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
@@ -23,8 +23,22 @@ jobs:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          set -x  # Enable debugging
+          
+          # Create .ssh directory
           mkdir -p ~/.ssh
+
+          # Output SSH key and permissions
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ls -la ~/.ssh  # List .ssh directory to confirm id_rsa file permissions
+
+          # Scan SSH key
           ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
-          rsync -avz -e "ssh -v -p $DEPLOY_PORT" --exclude '.git*' . $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
+          cat ~/.ssh/known_hosts  # List known_hosts to verify entry
+
+          # Test SSH connection
+          ssh -o StrictHostKeyChecking=no -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_SERVER "echo SSH connection successful"
+
+          # Run rsync
+          rsync -avz -e "ssh -p $DEPLOY_PORT" --exclude '.git*' . $DEPLOY_USER@$DEPLOY_SERVER:$DEPLOY_PATH
