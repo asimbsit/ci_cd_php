@@ -21,9 +21,6 @@ jobs:
         with:
           php-version: '8.1' # Specify your PHP version here
 
-      - name: Install dependencies
-        run: composer install
-
       - name: Run PHP syntax check
         run: find . -type f -name "*.php" -exec php -l {} \;
 
