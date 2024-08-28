@@ -21,7 +21,6 @@ jobs:
           host: ${{ secrets.DEPLOY_SERVER }}
           username: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.SSH_PASS }}
-          port: ${{ secrets.DEPLOY_PORT }}
           debug: true
           script: |
             whoami
