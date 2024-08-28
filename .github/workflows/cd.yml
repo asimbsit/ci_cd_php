@@ -33,7 +33,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
           # Add the server to known_hosts to prevent prompts
-          ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
+          # ssh-keyscan -p $DEPLOY_PORT -H $DEPLOY_SERVER >> ~/.ssh/known_hosts
 
           # Test SSH connection
           ssh -i ~/.ssh/id_rsa -p $DEPLOY_PORT $DEPLOY_USER@$DEPLOY_SERVER "echo SSH connection successful"
