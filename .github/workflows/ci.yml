@@ -23,7 +23,9 @@ jobs:
           error_detected=0
           # Find all PHP files excluding vendor directory and check syntax
           find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; | while read -r line; do
-            echo "Asim"
+            echo "start"
+            echo "$line"
+            echo "end"
             if echo "$line" | grep -q "Parse error"; then
               error_detected=1
             fi
