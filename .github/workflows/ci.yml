@@ -33,6 +33,7 @@ jobs:
             echo "Syntax errors detected. Failing the job."
             exit 1
           fi
+          exit 1
                  
       # - name: Set up PHP
       #   uses: shivammathur/setup-php@v2
