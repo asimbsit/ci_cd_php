@@ -8,4 +8,8 @@ class Calculator
     {
         return $a + $b;
     }
+
+    public function containsString(){
+        return 'fail';
+    }
 }
