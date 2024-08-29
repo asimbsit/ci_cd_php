@@ -33,4 +33,4 @@ jobs:
               git init
               git remote add origin ${{ secrets.SSH_GIT_ORIGIN_WITH_PAT }}
             fi
-            git pull origin dev
+            git pull origin master

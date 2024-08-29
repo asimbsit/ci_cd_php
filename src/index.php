@@ -1,4 +1,4 @@
 <?php
 
-echo "This should deploy to production when dev will be merged into master";
+echo "This should not deploy to production when dev will be merged into staging";
 echo "blue";
