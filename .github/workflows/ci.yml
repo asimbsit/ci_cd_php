@@ -28,15 +28,15 @@ jobs:
               exit 1
             fi
           done
-                 
-      # - name: Set up PHP
-      #   uses: shivammathur/setup-php@v2
-      #   with:
-      #     php-version: '7.4' # Specify your PHP version here
+          
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4' # Specify your PHP version here
 
-      # - name: Install dependencies
-      #   run: composer install
+      - name: Install dependencies
+        run: composer install
 
-      # - name: Run PHPUnit tests
-      #   run: ./vendor/bin/phpunit --verbose tests
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit --verbose tests
 
