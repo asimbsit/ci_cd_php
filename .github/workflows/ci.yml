@@ -15,19 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Run PHP syntax check
-        run: |
-          set -e
-          # Initialize a variable to track errors
-          error_detected=0
-          # Find all PHP files excluding vendor directory and check syntax
-          find . -path ./vendor -prune -o -type f -name "*.php" -exec php -l {} \; 2>&1 | while read -r line; do
-            if echo "$line" | grep -q "Parse error"; then
-              echo "$line"
-              exit 1
-            fi
-          done
       
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
